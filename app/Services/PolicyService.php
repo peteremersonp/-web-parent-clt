@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\BlacklistProfile;
+use App\Models\BlacklistProfileAllow;
 use App\Models\BlacklistProfileRule;
 use App\Models\BlacklistRule;
 use App\Models\Device;
@@ -13,7 +14,7 @@ use Illuminate\Support\Collection;
 
 class PolicyService
 {
-    public const DNS_MODES = ['local-filter', 'off', 'block-all'];
+    public const DNS_MODES = ['local-filter', 'off', 'block-all', 'allow-only'];
 
     public const DEFAULT_SCHEDULE_EVAL_SEC = 30;
 
@@ -66,7 +67,8 @@ class PolicyService
 
         return ScheduleWindow::query()
             ->where('enabled', true)
-            ->with(['profile.rules' => fn ($q) => $q->where('enabled', true)->orderBy('domain')])
+            ->with(['profile.rules' => fn ($q) => $q->where('enabled', true)->orderBy('domain'),
+                    'profile.allows' => fn ($q) => $q->where('enabled', true)->orderBy('domain')])
             ->orderBy('day_of_week')
             ->orderBy('start_time')
             ->get()
@@ -98,6 +100,12 @@ class PolicyService
                         'domain' => $r->domain,
                         'type' => $r->type,
                     ])->values()->all(),
+                'allowlist' => $profile->dns_mode === BlacklistProfile::DNS_MODE_ALLOW_ONLY
+                    ? $profile->allows
+                        ->filter(fn (BlacklistProfileAllow $a) => $a->enabled)
+                        ->map(fn (BlacklistProfileAllow $a) => ['domain' => $a->domain])
+                        ->values()->all()
+                    : [],
             ],
         ];
     }

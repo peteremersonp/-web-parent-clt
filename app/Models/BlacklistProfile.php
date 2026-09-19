@@ -11,6 +11,10 @@ class BlacklistProfile extends Model
 
     public const DNS_MODE_OFF = 'off';
 
+    public const DNS_MODE_BLOCK_ALL = 'block-all';
+
+    public const DNS_MODE_ALLOW_ONLY = 'allow-only';
+
     protected $fillable = ['name', 'slug', 'description', 'dns_mode', 'enabled'];
 
     protected function casts(): array
@@ -23,6 +27,11 @@ class BlacklistProfile extends Model
     public function rules(): HasMany
     {
         return $this->hasMany(BlacklistProfileRule::class, 'blacklist_profile_id');
+    }
+
+    public function allows(): HasMany
+    {
+        return $this->hasMany(BlacklistProfileAllow::class, 'blacklist_profile_id');
     }
 
     public function windows(): HasMany

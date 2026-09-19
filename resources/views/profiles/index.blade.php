@@ -24,6 +24,7 @@
                 <option value="local-filter">local-filter (bloquea su lista)</option>
                 <option value="off">off (sin filtro, DNS original)</option>
                 <option value="block-all">block-all (bloquea TODO el internet)</option>
+                <option value="allow-only">allow-only (bloquea TODO excepto su lista)</option>
             </select>
         </div>
         <button class="rounded-md bg-emerald-600 px-4 py-2 text-sm font-medium text-white hover:bg-emerald-500">Crear perfil</button>
@@ -48,7 +49,7 @@
                         <div class="text-xs text-slate-400">{{ $profile->description }}</div>
                     </td>
                     <td class="px-4 py-3 text-slate-600">
-                        <span class="inline-flex rounded-full px-2 py-0.5 text-xs {{ $profile->dns_mode === 'off' ? 'bg-slate-100 text-slate-500' : ($profile->dns_mode === 'block-all' ? 'bg-rose-100 text-rose-700' : 'bg-emerald-100 text-emerald-700') }}">
+                        <span class="inline-flex rounded-full px-2 py-0.5 text-xs {{ $profile->dns_mode === 'off' ? 'bg-slate-100 text-slate-500' : ($profile->dns_mode === 'block-all' ? 'bg-rose-100 text-rose-700' : ($profile->dns_mode === 'allow-only' ? 'bg-indigo-100 text-indigo-700' : 'bg-emerald-100 text-emerald-700')) }}">
                             {{ $profile->dns_mode }}
                         </span>
                     </td>

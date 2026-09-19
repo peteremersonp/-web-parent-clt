@@ -48,6 +48,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/profiles/{profile}/rules', [ProfileController::class, 'storeRule'])->name('profiles.rules.store');
     Route::post('/profiles/{profile}/rules/{rule}/toggle', [ProfileController::class, 'toggleRule'])->name('profiles.rules.toggle');
     Route::delete('/profiles/{profile}/rules/{rule}', [ProfileController::class, 'destroyRule'])->name('profiles.rules.destroy');
+    Route::post('/profiles/{profile}/allows', [ProfileController::class, 'storeAllow'])->name('profiles.allows.store');
+    Route::post('/profiles/{profile}/allows/{allow}/toggle', [ProfileController::class, 'toggleAllow'])->name('profiles.allows.toggle');
+    Route::delete('/profiles/{profile}/allows/{allow}', [ProfileController::class, 'destroyAllow'])->name('profiles.allows.destroy');
 
     Route::get('/schedules', [ScheduleController::class, 'index'])->name('schedules.index');
     Route::post('/schedules', [ScheduleController::class, 'store'])->name('schedules.store');

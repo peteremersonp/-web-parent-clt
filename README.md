@@ -194,12 +194,13 @@ Modelo de tres piezas:
 BlacklistProfile (perfil)        ScheduleWindow (franja)          Device
 ├─ name / slug                   ├─ profile_id ──────────────┐    (todos heredan
 ├─ dns_mode: local-filter |      ├─ day_of_week (0=Dom..6)   │     la programación
-│            off | block-all     ├─ start_time  "HH:mm"      │     por defecto)
-└─ rules (su propia lista        ├─ end_time    "HH:mm"      │
-   de dominios exact/wildcard)   └─ enabled                  │
-                                            ScheduleOverride │
-                                            ├─ device_id + window_id
-                                            ├─ action: delete | replace
+│            off | block-all |   ├─ start_time  "HH:mm"      │     por defecto)
+│            allow-only          ├─ end_time    "HH:mm"      │
+├─ rules (su propia lista        └─ enabled                  │
+   de dominios exact/wildcard)
+├─ allows (dominios permitidos            ScheduleOverride
+   para el modo allow-only)              ├─ device_id + window_id
+                                         ├─ action: delete | replace
                                             └─ profile_id (para replace)
 ```
 
@@ -214,6 +215,11 @@ BlacklistProfile (perfil)        ScheduleWindow (franja)          Device
    - `local-filter` → DNS del equipo en `127.0.0.1` + bloquea la lista del perfil.
    - `block-all` → DNS en `127.0.0.1` y responde **NXDOMAIN a todas las consultas**
      (internet sin salida; lo usan los perfiles `dormir` y `castigo`).
+   - `allow-only` → DNS en `127.0.0.1` y bloquea **todo excepto** los dominios
+     de la lista de permitidos del perfil (incluye subdominios). Ideal para
+     niños pequeños o modo examen.
+     > ⚠️ Sin bloqueo de firewall, un usuario avanzado puede saltarse este modo
+     > cambiando el DNS manualmente.
    - `off` → restaura el DNS del equipo (sin filtro).
 4. **Sin ventana activa** (hueco de la programación) → modo `off` (DNS original,
    sin bloqueos).
