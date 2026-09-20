@@ -6,6 +6,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DeviceController;
 use App\Http\Controllers\DeviceScheduleController;
 use App\Http\Controllers\DownloadController;
+use App\Http\Controllers\GoogleAuthController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RuleController;
 use App\Http\Controllers\ScheduleController;
@@ -17,6 +18,9 @@ Route::get('/', fn () => redirect()->route('dashboard'));
 Route::middleware('guest')->group(function () {
     Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
     Route::post('/login', [LoginController::class, 'store']);
+    Route::get('/google/redirect', [GoogleAuthController::class, 'redirect'])->name('google.redirect');
+    // El URI es "callbak" (con esa ortografía) porque así está registrado en Google Cloud Console.
+    Route::get('/google/callbak', [GoogleAuthController::class, 'callback'])->name('google.callback');
 });
 
 Route::post('/logout', [LoginController::class, 'destroy'])->middleware('auth')->name('logout');

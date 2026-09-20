@@ -6,7 +6,6 @@ use App\Models\Setting;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
-
 class DatabaseSeeder extends Seeder
 {
     public function run(): void
@@ -29,5 +28,8 @@ class DatabaseSeeder extends Seeder
         foreach ($seedSettings as $key => $value) {
             Setting::upsertValue($key, $value);
         }
+
+        // Usuarios autorizados para el login con Google (lista blanca, sin auto-alta)
+        $this->call(GoogleUsersSeeder::class);
     }
 }
