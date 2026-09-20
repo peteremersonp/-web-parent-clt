@@ -31,6 +31,9 @@ class ParentScheduleSeeder extends Seeder
             'lista-escolar' => ['desc' => 'Jornada Escolar: IA, Google, LMS y Ministerio de Educación', 'mode' => 'allow-only',
                 'rules' => [],
                 'allows' => [
+                    // Panel de gestión: SIEMPRE permitido
+                    'quanther.com', '*.quanther.com',
+                    // Google + Images + Classroom + Gemini (todos los subdominios de google)
                     'google.com', '*.google.com',
                     'chatgpt.com', '*.chatgpt.com', 'openai.com', '*.openai.com',
                     'claude.ai', '*.claude.ai', 'anthropic.com', '*.anthropic.com',
@@ -47,7 +50,9 @@ class ParentScheduleSeeder extends Seeder
                 ]],
             'lista-nocturna' => ['desc' => 'Solo contacto de emergencia (noches)', 'mode' => 'allow-only',
                 'rules' => [],
-                'allows' => ['google.com', '*.google.com', 'wikipedia.org', '*.wikipedia.org']],
+                'allows' => [
+                    'quanther.com', '*.quanther.com',   // panel de gestión
+                    'google.com', '*.google.com', 'wikipedia.org', '*.wikipedia.org']],
             'jornada-domestica' => ['desc' => 'Navegación normal excepto redes sociales y mensajería', 'mode' => 'local-filter',
                 'rules' => [
                     ['instagram.com', 'exact'], ['*.instagram.com', 'wildcard'],

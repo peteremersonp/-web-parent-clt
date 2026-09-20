@@ -22,7 +22,7 @@ class DatabaseSeeder extends Seeder
         $seedSettings = [
             Setting::KEY_POLL_INTERVAL_SEC => 600,
             Setting::KEY_DNS_MODE => 'local-filter',
-            Setting::KEY_UPSTREAM_DOH => 'https://cloudflare-dns.com/dns-query',
+            Setting::KEY_UPSTREAM_DOH => 'https://1.1.1.1/dns-query',
             Setting::KEY_FALLBACK_DNS => '1.1.1.1',
         ];
 
