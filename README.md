@@ -296,10 +296,14 @@ en índices únicos, así que duplicados globales se detectan por código).
 
 ### Descarga del instalador
 
-`DownloadController` sirve el exe **directamente desde la carpeta de salida de
-Inno Setup** (`Installer/Output/` en el host Windows, accesible vía `/mnt/c`):
-el botón del dashboard entrega siempre la última compilación sin copiar nada.
-Si el archivo no existe responde 404.
+`DownloadController` sirve el exe buscando en estas rutas (en orden):
+
+1. `storage/app/private/ParentCLT-Setup.exe` → **producción**: sube ahí el exe.
+2. Salida de Inno Setup del host Windows (`/mnt/c/.../Installer/Output/`) → desarrollo: entrega siempre la última compilación sin copiar nada.
+
+Si no existe en ninguna ruta responde 404. Para actualizar el instalador en
+producción: reemplaza el exe de `storage/app/private/` y listo (el botón del
+dashboard lo sirve siempre).
 
 > **Nota antivirus:** el instalador/agente no están firmados digitalmente; Windows
 > Defender puede detectarlo como PUA y Smart App Control (Win 11) lo bloquea.

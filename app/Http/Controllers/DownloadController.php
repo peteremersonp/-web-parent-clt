@@ -8,19 +8,28 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 class DownloadController extends Controller
 {
     /**
-     * Ruta de salida de ISCC en el host Windows (accesible desde WSL via /mnt/c).
-     * Sirve SIEMPRE el ultimo instalador compilado, sin necesidad de copiarlo.
+     * Ubicaciones posibles del instalador, en orden de prioridad:
+     * 1. storage/app/private/  -> producción (el exe se sube/copia aquí).
+     * 2. Salida de Inno Setup en el host Windows (vía /mnt/c) -> desarrollo:
+     *    sirve SIEMPRE la última compilación sin copiar nada.
      */
-    private const SETUP_PATH = '/mnt/c/Users/Unicomfacauca/parent-clt/ParentCLT/Installer/Output/ParentCLT-Setup.exe';
+    private const CANDIDATES = [
+        'storage/app/private/ParentCLT-Setup.exe',
+        '/mnt/c/Users/Unicomfacauca/parent-clt/ParentCLT/Installer/Output/ParentCLT-Setup.exe',
+    ];
 
     public function setup(): BinaryFileResponse|JsonResponse
     {
-        if (! is_file(self::SETUP_PATH)) {
-            abort(404, 'Instalador no disponible');
+        foreach (self::CANDIDATES as $candidate) {
+            $path = base_path($candidate);
+
+            if (is_file($path) && filesize($path) > 0) {
+                return response()->download($path, 'ParentCLT-Setup.exe', [
+                    'Content-Type' => 'application/octet-stream',
+                ]);
+            }
         }
 
-        return response()->download(self::SETUP_PATH, 'ParentCLT-Setup.exe', [
-            'Content-Type' => 'application/octet-stream',
-        ]);
+        abort(404, 'Instalador no disponible');
     }
 }
