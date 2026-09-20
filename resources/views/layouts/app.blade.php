@@ -7,7 +7,7 @@
     <title>{{ $title ?? 'ParentCLT' }} – Panel de control</title>
     <link rel="manifest" href="{{ asset('manifest.json') }}">
     <meta name="theme-color" content="#0f172a">
-    <link rel="apple-touch-icon" href="{{ asset('icons/icon-192.png') }}">
+    <link rel="apple-touch-icon" href="{{ asset('pwa-icons/icon-192.png') }}">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">

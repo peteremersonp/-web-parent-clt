@@ -18,13 +18,13 @@ Route::get('/', fn () => redirect()->route('dashboard'));
 // PWA: página offline precacheada por el service worker
 Route::view('/offline', 'pwa.offline')->name('pwa.offline');
 
-// Iconos PWA servidos por Laravel: immune a la config de nginx/apache del hosting
-// (los estáticos daban 404 según el vhost). Solo nombres de archivo PNG permitidos.
-Route::get('/icons/{file}', function (string $file) {
+// Iconos PWA servidos por Laravel: inmune a la config de nginx/apache del hosting
+// (y a /icons/ reservado por mod_alias de Apache). Solo nombres de archivo PNG.
+Route::get('/pwa-icons/{file}', function (string $file) {
     if (! preg_match('/^[\w.-]+\.png$/', $file)) {
         abort(404);
     }
-    $path = public_path('icons/'.$file);
+    $path = public_path('pwa-icons/'.$file);
     if (! is_file($path)) {
         abort(404);
     }

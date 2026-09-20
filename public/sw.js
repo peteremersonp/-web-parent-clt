@@ -6,7 +6,7 @@
  */
 const CACHE = 'parentclt-v1';
 const OFFLINE_URL = '/offline';
-const PRECACHE = [OFFLINE_URL, '/manifest.json', '/icons/icon-192.png', '/icons/icon-512.png'];
+const PRECACHE = [OFFLINE_URL, '/manifest.json', '/pwa-icons/icon-192.png', '/pwa-icons/icon-512.png'];
 const ASSET_RE = /\.(css|js|png|jpe?g|gif|svg|ico|woff2?|ttf)$/i;
 
 self.addEventListener('install', (event) => {
