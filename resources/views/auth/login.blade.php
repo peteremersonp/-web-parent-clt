@@ -76,5 +76,6 @@
         </form>
     </div>
 </div>
+@include('partials.install-banner')
 </body>
 </html>

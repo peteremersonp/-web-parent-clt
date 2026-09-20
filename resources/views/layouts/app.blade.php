@@ -150,6 +150,7 @@
         </div>
     </main>
 </div>
+@include('partials.install-banner')
 <script>
     function toggleTheme() {
         const html = document.documentElement;
