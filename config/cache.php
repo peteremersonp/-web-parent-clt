@@ -114,4 +114,18 @@ return [
 
     'prefix' => env('CACHE_PREFIX', Str::slug((string) env('APP_NAME', 'laravel')).'-cache-'),
 
+    /*
+    |--------------------------------------------------------------------------
+    | Serializable Cache Classes
+    |--------------------------------------------------------------------------
+    |
+    | When storing values in the cache, serialization is used to serialize
+    | the values. This setting controls the classes that may be unserialized
+    | from cached values. It is set to "false" to only allow "array", "bool",
+    | "integer", "float", "string" and "null" to be unserialized.
+    |
+    */
+
+    'serializable_classes' => false,
+
 ];
